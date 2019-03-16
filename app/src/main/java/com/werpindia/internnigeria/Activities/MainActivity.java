@@ -1,7 +1,9 @@
-package com.werpindia.internnigeria;
+package com.werpindia.internnigeria.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.werpindia.internnigeria.R;
 
 public class MainActivity extends AppCompatActivity {
 
