@@ -9,7 +9,6 @@ import android.os.Bundle;
 
 import com.google.android.material.tabs.TabLayout;
 import com.werpindia.internnigeria.Adapters.DashboardViewPagerAdapter;
-import com.werpindia.internnigeria.Fragments.InternshipListFragment;
 import com.werpindia.internnigeria.R;
 
 public class DashboardActivity extends AppCompatActivity {
