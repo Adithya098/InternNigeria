@@ -32,7 +32,7 @@ public class applicant_list extends Fragment {
         applicants.add(new applications("abc xyz","abc@123.com",R.drawable.abc));
         RecyclerView myrv=(RecyclerView) getActivity().findViewById(R.id.rv1);
         RecylerViewAdapter recylerViewAdapter=new RecylerViewAdapter(getActivity(),applicants);
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         myrv.setLayoutManager(layoutManager);
         myrv.setAdapter(recylerViewAdapter);
