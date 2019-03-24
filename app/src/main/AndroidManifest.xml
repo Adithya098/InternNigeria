@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.werpindia.internnigeria">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -13,20 +15,21 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:theme="@style/AppTheme_gray.NoActionBar">
+
+        </activity>
+
+        <activity android:name=".activities.UserLoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name=".userSignupLogin.UserLoginActivity"
+            android:name=".activities.UserSignUpActivity"
             android:theme="@style/AppTheme_gray.NoActionBar" />
-        <activity android:name=".userSignupLogin.UserSignupActivity"
-            android:theme="@style/AppTheme_gray.NoActionBar"/>
     </application>
 
 </manifest>
