@@ -23,7 +23,6 @@ public class InputValidatorTest
     {
         String result = InputValidator.validateSignUpDetails(new ObservableField<>("g@gmail.com"),new ObservableField<>("654321")
                 ,new ObservableField<>("654321"),new ObservableField<>("InternNigeria"));
-
         assertNull(result);
     }
 }

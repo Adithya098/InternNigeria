@@ -24,9 +24,11 @@
         android:background="@color/colorPrimary_gray"
         tools:context=".activities.UserLoginActivity">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp"
             android:layout_gravity="center">
 
             <com.google.android.material.textfield.TextInputLayout
@@ -83,7 +85,7 @@
                 android:background="@drawable/transparent_button"
                 android:padding="10dp"
                 android:text="@string/forgot_password"
-
+                android:layout_gravity="end"
                 android:textAllCaps="false"
                 android:textColor="@color/colorAccent" />
 
@@ -101,18 +103,21 @@
                 android:textColor="@color/colorAccent" />
 
             <Button
-                android:id="@+id/signup"
+                android:id="@+id/signUp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/element_margin"
                 android:layout_marginBottom="@dimen/element_margin"
                 android:background="@android:color/white"
                 android:padding="5dp"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="end"
+                android:backgroundTint="@color/colorPrimaryDark_gray"
                 android:text="@string/create_new_account"
                 android:onClick="@{createListener}"
-                android:textColor="@color/colorPrimaryDark_blue" />
+                android:textColor="@android:color/white" />
 
-        </RelativeLayout>
+        </LinearLayout>
 
     </ScrollView>
 </layout>

@@ -2,7 +2,10 @@ package com.werpindia.internnigeria.repositories;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+
 import com.werpindia.internnigeria.models.Employer;
+
+import java.util.Objects;
 
 import io.reactivex.Single;
 import io.reactivex.SingleOnSubscribe;
@@ -28,31 +31,40 @@ public class EmployerRepository
         {
             if (!emitter.isDisposed())
             {
+                //Sign In User With Email And Password
                 auth.signInWithEmailAndPassword(email,password).addOnCompleteListener(task ->
                 {
-                    if (task.isSuccessful()) emitter.onSuccess(true);
+                    if (task.isSuccessful())
+                    {
+                        //Check If Email Provided Is Verified
+                        if (auth.getCurrentUser().isEmailVerified()) emitter.onSuccess(true);
+                        else emitter.onError(new Exception("Email Is Not Verified"));
+                    }
                     else emitter.onError(task.getException());
                 });
             }
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<Boolean> signuUp(Employer newEmployer)
+    public Single<Boolean> signUp(Employer newEmployer)
     {
         return Single.create((SingleOnSubscribe<Boolean>) emitter ->
         {
             if (!emitter.isDisposed())
             {
+                //Create A New User With Details Provided
                auth.createUserWithEmailAndPassword(newEmployer.getEmail(),newEmployer.getPassword()).addOnCompleteListener(task ->
                {
-                   if (task.isSuccessful())
+                   //Save The Employer Details If The Account Creation Was Successful
+                   if (task.isSuccessful()) db.collection(EMPLOYER_COLLECTION_NAME).add(newEmployer).addOnCompleteListener(addTask ->
                    {
-                       db.collection(EMPLOYER_COLLECTION_NAME).add(newEmployer).addOnCompleteListener(addTask ->
-                       {
-                           if (addTask.isSuccessful()) emitter.onSuccess(true);
-                           else emitter.onError(addTask.getException());
-                       });
-                   }
+                       if (addTask.isSuccessful()) {
+                          /* If Saving Was Successful Send A Verification Email To The User And Then
+                              Sign Them Out*/
+                           Objects.requireNonNull(auth.getCurrentUser()).sendEmailVerification();
+                           auth.signOut();
+                       } else emitter.onError(addTask.getException());
+                   });
                    else emitter.onError(task.getException());
                });
             }

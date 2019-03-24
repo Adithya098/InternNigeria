@@ -53,13 +53,13 @@ public class UserViewModel extends AndroidViewModel
         return result;
     }
 
-    public LiveData<Boolean> signUpEmployer()
+    public LiveData<Boolean> signUpEmployer(String phoneNumber)
     {
         MutableLiveData<Boolean> result = new MutableLiveData<>();
         if (InputValidator.validateSignUpDetails(signUpEmail, signUpPassword, signUpConfirmPassword, signUpCompanyName) == null)
         {
-            Employer newEmployer = new Employer(signUpCompanyName.get(), signUpEmail.get(), signUpPassword.get());
-            employerRepository.signuUp(newEmployer).subscribe(new DisposableSingleObserver<Boolean>() {
+            Employer newEmployer = new Employer(signUpCompanyName.get(), signUpEmail.get(), signUpPassword.get(),phoneNumber);
+            employerRepository.signUp(newEmployer).subscribe(new DisposableSingleObserver<Boolean>() {
                 @Override
                 public void onSuccess(Boolean aBoolean) {
                     result.setValue(aBoolean);
