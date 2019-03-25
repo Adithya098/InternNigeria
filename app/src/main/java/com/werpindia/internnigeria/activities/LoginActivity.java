@@ -5,14 +5,14 @@ import android.os.Bundle;
 
 import com.werpindia.internnigeria.R;
 import com.werpindia.internnigeria.databinding.ActivityUserLoginBinding;
-import com.werpindia.internnigeria.viewModels.UserViewModel;
+import com.werpindia.internnigeria.viewModels.EmployerViewModel;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
-public class UserLoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState)
@@ -20,15 +20,15 @@ public class UserLoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ActivityUserLoginBinding loginBinding = DataBindingUtil.setContentView(this,R.layout.activity_user_login);
 
-        UserViewModel userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
-        loginBinding.setUserModel(userViewModel);
+        EmployerViewModel employerViewModel = ViewModelProviders.of(this).get(EmployerViewModel.class);
+        loginBinding.setUserModel(employerViewModel);
 
-        loginBinding.setLoginListener(v -> userViewModel.loginEmployer().observe(this,result ->
+        loginBinding.setLoginListener(v -> employerViewModel.loginEmployer().observe(this, result ->
         {
             if (result != null) if (result) startActivity(new Intent(getApplicationContext(),MainActivity.class));
         }));
 
-        loginBinding.setCreateListener(v -> startActivity(new Intent(getApplicationContext(),UserSignUpActivity.class)));
+        loginBinding.setCreateListener(v -> startActivity(new Intent(getApplicationContext(), SignUpActivity.class)));
     }
 }
 

@@ -37,7 +37,7 @@ public class EmployerRepository
                     if (task.isSuccessful())
                     {
                         //Check If Email Provided Is Verified
-                        if (auth.getCurrentUser().isEmailVerified()) emitter.onSuccess(true);
+                        if (Objects.requireNonNull(auth.getCurrentUser()).isEmailVerified()) emitter.onSuccess(true);
                         else emitter.onError(new Exception("Email Is Not Verified"));
                     }
                     else emitter.onError(task.getException());
@@ -50,24 +50,22 @@ public class EmployerRepository
     {
         return Single.create((SingleOnSubscribe<Boolean>) emitter ->
         {
+            //Create A New User With Details Provided
             if (!emitter.isDisposed())
-            {
-                //Create A New User With Details Provided
-               auth.createUserWithEmailAndPassword(newEmployer.getEmail(),newEmployer.getPassword()).addOnCompleteListener(task ->
-               {
-                   //Save The Employer Details If The Account Creation Was Successful
-                   if (task.isSuccessful()) db.collection(EMPLOYER_COLLECTION_NAME).add(newEmployer).addOnCompleteListener(addTask ->
-                   {
-                       if (addTask.isSuccessful()) {
+                auth.createUserWithEmailAndPassword(newEmployer.getEmail(), newEmployer.getPassword()).addOnCompleteListener(task ->
+                {
+                    //Save The Employer Details If The Account Creation Was Successful
+                    if (task.isSuccessful()) db.collection(EMPLOYER_COLLECTION_NAME).add(newEmployer).addOnCompleteListener(addTask ->
+                    {
+                        if (addTask.isSuccessful()) {
                           /* If Saving Was Successful Send A Verification Email To The User And Then
                               Sign Them Out*/
-                           Objects.requireNonNull(auth.getCurrentUser()).sendEmailVerification();
-                           auth.signOut();
-                       } else emitter.onError(addTask.getException());
-                   });
-                   else emitter.onError(task.getException());
-               });
-            }
+                          Objects.requireNonNull(auth.getCurrentUser()).sendEmailVerification();
+                          auth.signOut();
+                        } else emitter.onError(addTask.getException());
+                    });
+                    else emitter.onError(task.getException());
+                });
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 

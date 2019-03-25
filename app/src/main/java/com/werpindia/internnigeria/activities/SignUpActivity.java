@@ -13,7 +13,7 @@ import com.werpindia.internnigeria.R;
 import com.werpindia.internnigeria.databinding.ActivityUserSignupBinding;
 import com.werpindia.internnigeria.dialogs.PhoneVerificationDialog;
 import com.werpindia.internnigeria.interfaces.PhoneVerificationListener;
-import com.werpindia.internnigeria.viewModels.UserViewModel;
+import com.werpindia.internnigeria.viewModels.EmployerViewModel;
 
 import java.util.concurrent.TimeUnit;
 
@@ -22,10 +22,10 @@ import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ObservableField;
 import androidx.lifecycle.ViewModelProviders;
 
-public class UserSignUpActivity extends AppCompatActivity implements PhoneVerificationListener
+public class SignUpActivity extends AppCompatActivity implements PhoneVerificationListener
 {
     private ActivityUserSignupBinding signUpBinding;
-    private  UserViewModel userViewModel;
+    private EmployerViewModel employerViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -34,8 +34,8 @@ public class UserSignUpActivity extends AppCompatActivity implements PhoneVerifi
 
         signUpBinding = DataBindingUtil.setContentView(this,R.layout.activity_user_signup);
 
-        userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
-        signUpBinding.setEmployerModel(userViewModel);
+        employerViewModel = ViewModelProviders.of(this).get(EmployerViewModel.class);
+        signUpBinding.setEmployerModel(employerViewModel);
         signUpBinding.setSignUpPhoneNumber(new ObservableField<>());
 
         signUpBinding.setSignUpListener(v ->
@@ -52,7 +52,7 @@ public class UserSignUpActivity extends AppCompatActivity implements PhoneVerifi
                     public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) { signUp(phoneNumber); }
 
                     @Override
-                    public void onVerificationFailed(FirebaseException e) { Toast.makeText(UserSignUpActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show(); }
+                    public void onVerificationFailed(FirebaseException e) { Toast.makeText(SignUpActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show(); }
 
                     @Override
                     public void onCodeSent(String verificationCode, PhoneAuthProvider.ForceResendingToken forceResendingToken)
@@ -79,17 +79,17 @@ public class UserSignUpActivity extends AppCompatActivity implements PhoneVerifi
 
     private void signUp(String phoneNumber)
     {
-        signUpBinding.setSignUpListener(v -> userViewModel.signUpEmployer(phoneNumber).observe(UserSignUpActivity.this, result ->
+        signUpBinding.setSignUpListener(v -> employerViewModel.signUpEmployer(phoneNumber).observe(SignUpActivity.this, result ->
         {
             if (result != null ) if (result)
             {
                 // Display Alert Dialog To Inform The User About The Confirmation Email Sent
-                AlertDialog.Builder builder = new AlertDialog.Builder(UserSignUpActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(SignUpActivity.this);
                 builder.setTitle("Email Verification");
                 builder.setMessage("A Confirmation Message Has Been Sent To the Email Provided");
                 builder.setCancelable(false);
                 builder.setPositiveButton("Ok", (dialog, which) -> {
-                    startActivity(new Intent(getApplicationContext(),UserLoginActivity.class));
+                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                    finish();
                 });
                 builder.create().show();
