@@ -27,15 +27,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:orientation="vertical"
-            android:padding="5dp"
-            android:layout_gravity="center">
+            android:padding="5dp">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/username_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/signup"
                 android:layout_marginStart="@dimen/sides_margin"
                 android:layout_marginEnd="@dimen/sides_margin"
                 android:textColorHint="@color/opaqueColor">
@@ -56,7 +55,6 @@
                 android:id="@+id/password_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/username_layout"
                 android:layout_marginStart="@dimen/sides_margin"
                 android:layout_marginEnd="@dimen/sides_margin"
                 android:textColorHint="@color/opaqueColor"
@@ -79,13 +77,11 @@
                 android:id="@+id/forgotPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/password_layout"
-                android:layout_alignParentEnd="true"
+                android:layout_gravity="end"
                 android:layout_margin="@dimen/element_margin"
                 android:background="@drawable/transparent_button"
                 android:padding="10dp"
                 android:text="@string/forgot_password"
-                android:layout_gravity="end"
                 android:textAllCaps="false"
                 android:textColor="@color/colorAccent" />
 
@@ -93,28 +89,26 @@
                 android:id="@+id/login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/forgotPassword"
-                android:layout_alignParentBottom="true"
                 android:layout_marginStart="@dimen/sides_margin"
                 android:layout_marginEnd="@dimen/sides_margin"
                 android:background="@drawable/button"
-                android:text="@string/login"
                 android:onClick="@{loginListener}"
+                android:text="@string/login"
                 android:textColor="@color/colorAccent" />
 
             <Button
                 android:id="@+id/signUp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="end"
                 android:layout_marginStart="@dimen/element_margin"
+                android:layout_marginTop="20dp"
                 android:layout_marginBottom="@dimen/element_margin"
                 android:background="@android:color/white"
-                android:padding="5dp"
-                android:layout_marginTop="20dp"
-                android:layout_gravity="end"
                 android:backgroundTint="@color/colorPrimaryDark_gray"
-                android:text="@string/create_new_account"
                 android:onClick="@{createListener}"
+                android:padding="5dp"
+                android:text="@string/create_new_account"
                 android:textColor="@android:color/white" />
 
         </LinearLayout>
