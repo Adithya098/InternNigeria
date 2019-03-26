@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 import com.werpindia.internnigeria.models.Employer;
 import com.werpindia.internnigeria.repositories.EmployerRepository;
+import com.werpindia.internnigeria.repositories.InternshipRepository;
 import com.werpindia.internnigeria.utils.InputValidator;
 
 import androidx.annotation.NonNull;
@@ -30,11 +31,13 @@ public class EmployerViewModel extends AndroidViewModel
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     private EmployerRepository employerRepository;
+    private InternshipRepository internshipRepository;
 
     public EmployerViewModel(@NonNull Application application)
     {
         super(application);
         employerRepository = new EmployerRepository();
+        internshipRepository = new InternshipRepository();
     }
 
     public LiveData<Boolean> loginEmployer()

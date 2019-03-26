@@ -12,6 +12,7 @@ public class Internship
     private List<String> internResponsibilities;
     private List<String> questions9;
     private double stipend;
+    private String employerEmail;
 
     public Internship() {}
 

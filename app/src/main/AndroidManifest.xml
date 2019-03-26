@@ -14,12 +14,11 @@
         android:theme="@style/AppTheme_gray"
         tools:ignore="GoogleAppIndexingWarning">
 
+        <activity android:name=".activities.CreateInternshipActivity" />
+
         <activity
             android:name=".activities.MainActivity"
-            android:theme="@style/AppTheme_gray.NoActionBar">
-
-        </activity>
-
+            android:theme="@style/AppTheme_gray.NoActionBar" />
         <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,6 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".activities.SignUpActivity"
             android:theme="@style/AppTheme_gray.NoActionBar" />
