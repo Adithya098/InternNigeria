@@ -1,38 +1,29 @@
-package com.werpindia.internnigeria.Activities;
+package com.werpindia.internnigeria.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.viewpager.widget.ViewPager;
+import androidx.databinding.DataBindingUtil;
 
 import android.os.Bundle;
 
-
-import com.google.android.material.tabs.TabLayout;
-import com.werpindia.internnigeria.Adapters.DashboardViewPagerAdapter;
+import com.werpindia.internnigeria.adapters.DashboardViewPagerAdapter;
 import com.werpindia.internnigeria.R;
+import com.werpindia.internnigeria.databinding.ActivityDashboardBinding;
+
+import java.util.Objects;
 
 public class DashboardActivity extends AppCompatActivity {
 
-    private Toolbar toolbar;
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dashboard);
+        ActivityDashboardBinding dashboardBinding = DataBindingUtil.setContentView(this,R.layout.activity_dashboard);
 
-        toolbar = (Toolbar) findViewById(R.id.dashboardToolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setSupportActionBar((Toolbar) dashboardBinding.dashboardToolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-        tabLayout = (TabLayout) findViewById(R.id.dashboardTabs);
-        viewPager = (ViewPager) findViewById(R.id.dashboardViewPager);
-
-        DashboardViewPagerAdapter dashboardViewPagerAdapter = new DashboardViewPagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(dashboardViewPagerAdapter);
-
-        tabLayout.setupWithViewPager(viewPager);
-
+        dashboardBinding.setPagerAdapter(new DashboardViewPagerAdapter(getSupportFragmentManager()));
+        dashboardBinding.dashboardTabs.setupWithViewPager(dashboardBinding.dashboardViewPager);
     }
 }

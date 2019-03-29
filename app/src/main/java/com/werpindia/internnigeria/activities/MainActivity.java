@@ -16,6 +16,6 @@ public class MainActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         ActivityMainBinding mainBinding = DataBindingUtil.setContentView(this,R.layout.activity_main);
-        mainBinding.setAddListener(v -> startActivity(new Intent(getApplicationContext(),CreateInternshipActivity.class)));
+        mainBinding.setAddListener(v -> startActivity(new Intent(getApplicationContext(), com.werpindia.internnigeria.activities.CreateInternshipActivity.class)));
     }
 }

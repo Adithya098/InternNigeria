@@ -12,9 +12,10 @@ import com.google.firebase.auth.PhoneAuthProvider;
 import com.werpindia.internnigeria.R;
 import com.werpindia.internnigeria.databinding.ActivityUserSignupBinding;
 import com.werpindia.internnigeria.dialogs.PhoneVerificationDialog;
-import com.werpindia.internnigeria.interfaces.PhoneVerificationListener;
-import com.werpindia.internnigeria.viewModels.EmployerViewModel;
+import com.werpindia.internnigeria.listeners.PhoneVerificationListener;
+import com.werpindia.internnigeria.viewModels.CompanyViewModel;
 
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,7 +26,7 @@ import androidx.lifecycle.ViewModelProviders;
 public class SignUpActivity extends AppCompatActivity implements PhoneVerificationListener
 {
     private ActivityUserSignupBinding signUpBinding;
-    private EmployerViewModel employerViewModel;
+    private CompanyViewModel companyViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -34,15 +35,15 @@ public class SignUpActivity extends AppCompatActivity implements PhoneVerificati
 
         signUpBinding = DataBindingUtil.setContentView(this,R.layout.activity_user_signup);
 
-        employerViewModel = ViewModelProviders.of(this).get(EmployerViewModel.class);
-        signUpBinding.setEmployerModel(employerViewModel);
+        companyViewModel = ViewModelProviders.of(this).get(CompanyViewModel.class);
+        signUpBinding.setEmployerModel(companyViewModel);
         signUpBinding.setSignUpPhoneNumber(new ObservableField<>());
 
         signUpBinding.setSignUpListener(v ->
         {
             //Retrieve PhoneNumber From The EditText Observable
             String phoneNumber = signUpBinding.getSignUpPhoneNumber().get();
-            if (!phoneNumber.trim().isEmpty())
+            if (!Objects.requireNonNull(phoneNumber).trim().isEmpty())
             {
                 //Verify The Phone Number Provided
                 PhoneAuthProvider.getInstance().verifyPhoneNumber(phoneNumber, 60, TimeUnit.SECONDS, this,
@@ -79,7 +80,7 @@ public class SignUpActivity extends AppCompatActivity implements PhoneVerificati
 
     private void signUp(String phoneNumber)
     {
-        signUpBinding.setSignUpListener(v -> employerViewModel.signUpEmployer(phoneNumber).observe(SignUpActivity.this, result ->
+        signUpBinding.setSignUpListener(v -> companyViewModel.signUpEmployer(phoneNumber).observe(SignUpActivity.this, result ->
         {
             if (result != null ) if (result)
             {
