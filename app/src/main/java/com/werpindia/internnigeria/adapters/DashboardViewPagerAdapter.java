@@ -1,6 +1,6 @@
-package com.werpindia.internnigeria.Adapters;
+package com.werpindia.internnigeria.adapters;
 
-import com.werpindia.internnigeria.Fragments.InternshipListFragment;
+import com.werpindia.internnigeria.fragments.InternshipListFragment;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;

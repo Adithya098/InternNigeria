@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="categoryAdapter"
+            type="android.widget.SpinnerAdapter"/>
+
+        <variable
+            name="durationLengthAdapter"
+            type="android.widget.SpinnerAdapter"/>
+
+        <variable
+            name="durationTypeAdapter"
+            type="android.widget.SpinnerAdapter"/>
+
+        <variable
+            name="postListener"
+            type="android.view.View.OnClickListener"/>
+
+        <variable
+            name="category"
+            type="androidx.databinding.ObservableField&lt;String&gt;"/>
+
+        <variable
+            name="location"
+            type="androidx.databinding.ObservableField&lt;String&gt;"/>
+
+        <variable
+            name="numOfOpenings"
+            type="androidx.databinding.ObservableField&lt;String&gt;"/>
+
+        <variable
+            name="internshipDurationLength"
+            type="androidx.databinding.ObservableField&lt;String&gt;"/>
+
+        <variable
+            name="internshipDurationType"
+            type="androidx.databinding.ObservableField&lt;String&gt;"/>
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        tools:context=".activities.CreateInternshipActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/categoryLayoutParent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="3dp">
+
+                <TextView
+                    style="@style/TextAppearance.AppCompat.Headline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/category"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/internshipCategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:adapter="@{categoryAdapter}"
+                    app:currentValue="@{category}"
+                    android:layout_marginTop="5dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/locationLayoutParent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="3dp">
+
+                <TextView
+                    style="@style/TextAppearance.AppCompat.Headline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/location"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/internshipLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@={location}"
+                    android:layout_marginTop="5dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/openingLayoutParent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:padding="3dp">
+
+                <TextView
+                    style="@style/TextAppearance.AppCompat.Headline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/number_of_opening"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/numberOfOpening"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:text="@={numOfOpenings}"
+                    android:layout_marginStart="5dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/startDateLayoutParent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="3dp">
+
+                <TextView
+                    style="@style/TextAppearance.AppCompat.Headline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/internship_duration"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="5dp"
+                    android:weightSum="100">
+
+                    <Spinner
+                        android:id="@+id/internshipDurationNumber"
+                        android:layout_width="0dp"
+                        android:adapter="@{durationLengthAdapter}"
+                        app:currentValue="@{internshipDurationLength}"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="70" />
+
+                    <Spinner
+                        android:id="@+id/internshipDuration"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:currentValue="@{internshipDurationType}"
+                        android:layout_marginStart="10dp"
+                        android:adapter="@{durationTypeAdapter}"
+                        android:layout_weight="30" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/post"
+                android:onClick="@{postListener}"/>
+
+        </LinearLayout>
+    </ScrollView>
+</layout>

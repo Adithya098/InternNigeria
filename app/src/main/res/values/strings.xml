@@ -1,4 +1,45 @@
 <resources>
+
     <string name="app_name">InternNigeria</string>
+    <string name="login">Login</string>
+    <string name="signup">Sign Up</string>
+    <string name="create_new_account">Create new account</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="companyName">Email</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="company_name">CompanyName</string>
+    <string name="phone_number">Phone Number</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="enter_otp_hint">Enter OTP</string>
+    <string name="category">Category</string>
+    <string name="location">Location</string>
+    <string name="number_of_opening">Number Of Opening</string>
+    <string name="internship_duration">Internship Duration</string>
+    <string name="post">Post</string>
+
+    <string-array name="Internship_Category">
+        <item>Web Development</item>
+        <item>Mobile App Development</item>
+        <item>Content Writing</item>
+        <item>Graphic Design</item>
+    </string-array>
+
+    <string-array name="Internship_Duration_Length">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </string-array>
+
+    <array name="Internship_Duration_Type">
+        <item>Weeks</item>
+        <item>Months</item>
+    </array>
 
 </resources>

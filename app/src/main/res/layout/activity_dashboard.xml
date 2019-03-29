@@ -1,34 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Activities.DashboardActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/dashboardAppBarLayout">
+    <data>
+        <variable
+            name="pagerAdapter"
+            type="com.werpindia.internnigeria.adapters.DashboardViewPagerAdapter"/>
+    </data>
 
-        <include
-            android:id="@+id/dashboardToolbar"
-            layout="@layout/custom_toolbar" />
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/dashboardTabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabGravity="fill"
-            app:tabMode="fixed"
-            app:tabTextColor="@color/white" />
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/dashboardViewPager"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/dashboardAppBarLayout" />
+        tools:context=".activities.DashboardActivity">
 
-</RelativeLayout>
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/dashboardAppBarLayout">
+
+            <include
+                android:id="@+id/dashboardToolbar"
+                layout="@layout/custom_toolbar" />
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/dashboardTabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabGravity="fill"
+                app:tabMode="fixed"
+                android:background="@color/colorPrimary_green"
+                app:tabTextColor="@android:color/white" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/dashboardViewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/dashboardAppBarLayout"
+            android:layout_alignParentStart="true"
+            android:adapter="@{pagerAdapter}"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true" />
+
+    </RelativeLayout>
+</layout>
