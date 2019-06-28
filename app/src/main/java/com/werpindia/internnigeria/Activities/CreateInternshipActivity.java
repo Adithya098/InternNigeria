@@ -28,7 +28,7 @@ public class CreateInternshipActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        createInternshipBinding = DataBindingUtil.setContentView(this, R.layout.activity_create_internship);
+        createInternshipBinding = DataBindingUtil.setContentView(this,R.layout.activity_create_internship);
 
         ViewModelProvider providers = ViewModelProviders.of(this);
 

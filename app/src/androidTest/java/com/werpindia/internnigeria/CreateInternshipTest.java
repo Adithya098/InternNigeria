@@ -15,6 +15,8 @@ import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
 import static org.hamcrest.Matchers.allOf;
@@ -29,7 +31,7 @@ import static org.junit.Assert.assertNotNull;
 public class CreateInternshipTest
 {
     @Rule
-    public ActivityTestRule<CreateInternshipActivity> activityTestRule = new ActivityTestRule<>(CreateInternshipActivity.class);
+    public ActivityTestRule<CreateInternshipActivity> testRule = new ActivityTestRule<>(CreateInternshipActivity.class);
 
     @Test
     public void postTest()
@@ -37,8 +39,8 @@ public class CreateInternshipTest
         onView(withId(R.id.internshipCategory)).perform(click());
         onData(allOf(is(instanceOf(String.class)),is("Mobile App Development"))).perform(click());
 
-        onView(withId(R.id.internshipDurationNumber)).perform(click());
-        onData(allOf(is(instanceOf(String.class)),is("4"))).perform(click());
+        onView(withId(R.id.internshipDurationNumber)).check(matches(isCompletelyDisplayed())).perform(click());
+        onData(allOf(is(instanceOf(String.class)),is("2"))).perform(click());
 
         onView(withId(R.id.internshipDuration)).perform(click());
         onData(allOf(is(instanceOf(String.class)),is("Weeks"))).perform(click());
@@ -47,7 +49,7 @@ public class CreateInternshipTest
 
         onView(withId(R.id.numberOfOpening)).perform(typeText("5"));
 
-        Internship internship = activityTestRule.getActivity().createInternShip();
+        Internship internship = testRule.getActivity().createInternShip();
 
         assertNotNull(internship);
         assertEquals("Mobile App Development",internship.getCategory());
