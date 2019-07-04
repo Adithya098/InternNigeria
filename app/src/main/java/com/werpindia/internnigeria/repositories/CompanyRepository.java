@@ -1,18 +1,15 @@
 package com.werpindia.internnigeria.repositories;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-
 import com.google.firebase.firestore.QuerySnapshot;
-
 import com.werpindia.internnigeria.models.Company;
+import com.werpindia.internnigeria.models.FirebaseResponse;
 
 import java.util.Objects;
-
-import io.reactivex.Single;
-import io.reactivex.SingleOnSubscribe;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 public class CompanyRepository {
     private FirebaseAuth auth;
@@ -25,59 +22,54 @@ public class CompanyRepository {
         db = FirebaseFirestore.getInstance();
     }
 
-    public Single<Boolean> login(String email, String password) {
-        return Single.create((SingleOnSubscribe<Boolean>) emitter ->
+    public LiveData<FirebaseResponse> login(String email, String password) {
+        MutableLiveData<FirebaseResponse> result = new MutableLiveData<>();
+        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task ->
         {
-            if (!emitter.isDisposed()) {
-                //Sign In User With Email And Password
-                auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task ->
-                {
-                    if (task.isSuccessful()) {
-                        //Check If Email Provided Is Verified
-                        if (Objects.requireNonNull(auth.getCurrentUser()).isEmailVerified())
-                            emitter.onSuccess(true);
-                        else emitter.onError(new Exception("Email Is Not Verified"));
-                    } else emitter.onError(task.getException());
-                });
-            }
-        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+            if (task.isSuccessful()) {
+                if (auth.getCurrentUser().isEmailVerified())
+                    result.setValue(new FirebaseResponse("Sucesss", null));
+                else
+                    result.setValue(new FirebaseResponse(null, new Exception("Email Is Not Verified")));
+            } else result.setValue(new FirebaseResponse(null, task.getException()));
+        });
+        return result;
     }
 
-    public Single<Boolean> signUp(Company newCompany) {
-        return Single.create((SingleOnSubscribe<Boolean>) emitter -> {
-            //Create A New User With Details Provided
-            if (!emitter.isDisposed())
-                auth.createUserWithEmailAndPassword(newCompany.getProfile().getCompanyName(), newCompany.getPassword()).addOnCompleteListener(task ->
+    public LiveData<FirebaseResponse> signUp(Company newCompany) {
+
+        MutableLiveData<FirebaseResponse> result = new MutableLiveData<>();
+        auth.createUserWithEmailAndPassword(newCompany.getProfile().getCompanyName(), newCompany.getPassword()).addOnCompleteListener(task ->
+        {
+            //Save The Company Details If The Account Creation Was Successful
+            if (task.isSuccessful())
+                db.collection(COMPANY_COLLECTION_NAME).add(newCompany).addOnCompleteListener(addTask ->
                 {
-                    //Save The Company Details If The Account Creation Was Successful
-                    if (task.isSuccessful())
-                        db.collection(COMPANY_COLLECTION_NAME).add(newCompany).addOnCompleteListener(addTask ->
-                        {
-                            if (addTask.isSuccessful()) {
-                          /* If Saving Was Successful Send A Verification Email To The User And Then
-                              Sign Them Out*/
-                                Objects.requireNonNull(auth.getCurrentUser()).sendEmailVerification();
-                                auth.signOut();
-                            } else emitter.onError(addTask.getException());
-                        });
-                    else emitter.onError(task.getException());
+                    if (addTask.isSuccessful()) {
+                        Objects.requireNonNull(auth.getCurrentUser()).sendEmailVerification();
+                        auth.signOut();
+                        result.setValue(new FirebaseResponse(
+                                "A Confirmation Message Has Been Sent To Oyur Email", null));
+                    } else result.setValue(new FirebaseResponse(null, addTask.getException()));
                 });
-        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+            else result.setValue(new FirebaseResponse(null, new Exception(task.getException())));
+        });
+        return result;
     }
 
-    public Single<Company> getCompany(String email) {
-        return Single.create((SingleOnSubscribe<Company>) emitter ->
-        {
-            if (!emitter.isDisposed())
-                db.collection(COMPANY_COLLECTION_NAME).whereEqualTo("email", email).get().addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        QuerySnapshot snapshot = task.getResult();
-                        if (snapshot != null && !snapshot.getDocuments().isEmpty())
-                            emitter.onSuccess(snapshot.getDocuments().get(0).toObject(Company.class));
-                        else emitter.onSuccess(null);
-                    } else emitter.onError(task.getException());
-                });
-        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+    public LiveData<FirebaseResponse> getCompany(String email) {
+        MutableLiveData<FirebaseResponse> result = new MutableLiveData<>();
+
+        db.collection(COMPANY_COLLECTION_NAME).whereEqualTo("email", email).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                QuerySnapshot snapshot = task.getResult();
+                if (snapshot != null && !snapshot.getDocuments().isEmpty())
+                    result.setValue(new FirebaseResponse(
+                            snapshot.getDocuments().get(0).toObject(Company.class), null));
+                else result.setValue(new FirebaseResponse(null, null));
+            } else result.setValue(new FirebaseResponse(null, task.getException()));
+        });
+        return result;
     }
 
 }

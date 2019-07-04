@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="userModel"
             type="com.werpindia.internnigeria.viewModels.CompanyViewModel" />
@@ -16,13 +18,17 @@
         <variable
             name="createListener"
             type="android.view.View.OnClickListener" />
+
+        <variable
+            name="layoutEnabled"
+            type="androidx.databinding.ObservableBoolean" />
     </data>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorPrimary_gray"
-        tools:context=".activities.LoginActivity">
+        tools:context=".activities.AuthenticateActivity">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -32,7 +38,7 @@
             android:padding="5dp">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/username_layout"
+                android:id="@+id/lgoinEmailLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/sides_margin"
@@ -40,11 +46,12 @@
                 android:textColorHint="@color/opaqueColor">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/username"
+                    android:id="@+id/loginEmail"
                     android:layout_width="match_parent"
                     android:layout_height="?android:listPreferredItemHeight"
                     android:hint="@string/companyName"
                     android:inputType="text"
+                    android:enabled="@{layoutEnabled}"
                     android:maxLines="1"
                     android:text="@={userModel.loginEmail}"
                     android:textColor="@color/colorAccent" />
@@ -52,7 +59,7 @@
 
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/password_layout"
+                android:id="@+id/loginPasswordLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/sides_margin"
@@ -62,12 +69,13 @@
                 app:passwordToggleTint="@color/opaqueColor">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/password"
+                    android:id="@+id/loginPassword"
                     android:layout_width="match_parent"
                     android:layout_height="?android:listPreferredItemHeight"
                     android:layout_marginBottom="@dimen/element_margin"
                     android:hint="@string/password"
                     android:inputType="textPassword"
+                    android:enabled="@{layoutEnabled}"
                     android:maxLines="1"
                     android:text="@={userModel.loginPassword}"
                     android:textColor="@color/colorAccent" />
@@ -81,9 +89,18 @@
                 android:layout_margin="@dimen/element_margin"
                 android:background="@drawable/transparent_button"
                 android:padding="10dp"
+                android:enabled="@{layoutEnabled}"
                 android:text="@string/forgot_password"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white" />
+
+            <ProgressBar
+                android:id="@+id/loginProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="20dp"
+                android:visibility="@{layoutEnabled ? View.GONE : View.VISIBLE}" />
 
             <Button
                 android:id="@+id/login"
@@ -91,6 +108,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/sides_margin"
                 android:layout_marginEnd="@dimen/sides_margin"
+                android:enabled="@{layoutEnabled}"
                 android:background="@drawable/button"
                 android:onClick="@{loginListener}"
                 android:text="@string/login"
@@ -105,6 +123,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="@dimen/element_margin"
                 android:background="@android:color/white"
+                android:enabled="@{layoutEnabled}"
                 android:backgroundTint="@color/colorPrimaryDark_gray"
                 android:onClick="@{createListener}"
                 android:padding="5dp"

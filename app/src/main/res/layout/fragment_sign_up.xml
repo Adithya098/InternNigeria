@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="employerModel"
             type="com.werpindia.internnigeria.viewModels.CompanyViewModel" />
@@ -14,8 +16,16 @@
             type="android.view.View.OnClickListener" />
 
         <variable
+            name="loginListener"
+            type="android.view.View.OnClickListener" />
+
+        <variable
             name="signUpPhoneNumber"
             type="androidx.databinding.ObservableField&lt;String&gt;" />
+
+        <variable
+            name="layoutEnabled"
+            type="androidx.databinding.ObservableBoolean" />
 
     </data>
 
@@ -27,7 +37,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:orientation="vertical"
             android:padding="5dp"
             tools:context=".loginAndSignup.ActivityForSignup">
@@ -41,9 +50,10 @@
                 android:textColorHint="@color/opaqueColor">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/sigUpCompanyName"
+                    android:id="@+id/signUpCompanyName"
                     android:layout_width="match_parent"
                     android:layout_height="?android:listPreferredItemHeight"
+                    android:enabled="@{layoutEnabled}"
                     android:hint="@string/company_name"
                     android:inputType="text"
                     android:maxLines="1"
@@ -60,9 +70,10 @@
                 android:textColorHint="@color/opaqueColor">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/sigUpEmail"
+                    android:id="@+id/signUpEmail"
                     android:layout_width="match_parent"
                     android:layout_height="?android:listPreferredItemHeight"
+                    android:enabled="@{layoutEnabled}"
                     android:hint="@string/companyName"
                     android:inputType="text"
                     android:maxLines="1"
@@ -76,15 +87,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/sides_margin"
                 android:layout_marginEnd="@dimen/sides_margin"
-                app:passwordToggleEnabled="true"
-                android:textColorHint="@color/opaqueColor">
+                android:textColorHint="@color/opaqueColor"
+                app:passwordToggleEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/sigUpPassword"
+                    android:id="@+id/signUpPassword"
                     android:layout_width="match_parent"
                     android:layout_height="?android:listPreferredItemHeight"
+                    android:enabled="@{layoutEnabled}"
                     android:hint="@string/password"
-                    android:inputType="text"
+                    android:inputType="textPassword"
                     android:maxLines="1"
                     android:text="@={employerModel.signUpPassword}"
                     android:textColor="@color/colorAccent" />
@@ -95,16 +107,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/sides_margin"
-                app:passwordToggleEnabled="true"
                 android:layout_marginEnd="@dimen/sides_margin"
-                android:textColorHint="@color/opaqueColor">
+                android:textColorHint="@color/opaqueColor"
+                app:passwordToggleEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/sigUpConfirmPassword"
+                    android:id="@+id/signUpConfirmPassword"
                     android:layout_width="match_parent"
                     android:layout_height="?android:listPreferredItemHeight"
+                    android:enabled="@{layoutEnabled}"
                     android:hint="@string/confirm_password"
-                    android:inputType="text"
+                    android:inputType="textPassword"
                     android:maxLines="1"
                     android:text="@={employerModel.signUpConfirmPassword}"
                     android:textColor="@color/colorAccent" />
@@ -120,15 +133,24 @@
                 app:hintEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/sigUpPhoneNumber"
+                    android:id="@+id/signUpPhoneNumber"
                     android:layout_width="match_parent"
                     android:layout_height="?android:listPreferredItemHeight"
+                    android:enabled="@{layoutEnabled}"
                     android:hint="@string/phone_number"
                     android:inputType="text"
                     android:maxLines="1"
                     android:text="@={signUpPhoneNumber}"
                     android:textColor="@color/colorAccent" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <ProgressBar
+                android:id="@+id/loginProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="20dp"
+                android:visibility="@{layoutEnabled ? View.GONE : View.VISIBLE}" />
 
             <Button
                 android:id="@+id/signup"
@@ -138,9 +160,28 @@
                 android:layout_marginTop="@dimen/element_margin"
                 android:layout_marginEnd="@dimen/sides_margin"
                 android:background="@drawable/button"
+                android:enabled="@{layoutEnabled}"
                 android:onClick="@{signUpListener}"
                 android:text="@string/signup"
                 android:textColor="@color/colorAccent" />
+
+
+            <Button
+                android:id="@+id/signUp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginStart="@dimen/element_margin"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="@dimen/element_margin"
+                android:background="@android:color/white"
+                android:backgroundTint="@color/colorPrimaryDark_gray"
+                android:enabled="@{layoutEnabled}"
+                android:onClick="@{loginListener}"
+                android:padding="5dp"
+                android:text="@string/login"
+                android:textColor="@android:color/white" />
+
         </LinearLayout>
     </ScrollView>
 </layout>
