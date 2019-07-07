@@ -9,7 +9,7 @@ public class Internship
     private int numOfOpenings;
     private String startDate;
     private String duration;
-    private List<String> internResponsibilities;
+    private String internResponsibilities;
     private List<String> questions;
     private double stipend;
     private CompanyProfile profile;
@@ -56,11 +56,11 @@ public class Internship
         this.duration = duration;
     }
 
-    public List<String> getInternResponsibilities() {
+    public String getInternResponsibilities() {
         return internResponsibilities;
     }
 
-    public void setInternResponsibilities(List<String> internResponsibilities) {
+    public void setInternResponsibilities(String internResponsibilities) {
         this.internResponsibilities = internResponsibilities;
     }
 

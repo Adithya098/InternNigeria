@@ -53,6 +53,7 @@ public class CreateInternshipActivity extends AppCompatActivity
         createInternshipBinding.setLocation(new ObservableField<>());
         createInternshipBinding.setCategory(new ObservableField<>());
         createInternshipBinding.setNumOfOpenings(new ObservableField<>());
+        createInternshipBinding.setInternResponsibilities(new ObservableField<>());
 
         createInternshipBinding.setPostListener(v ->
         {
@@ -72,7 +73,7 @@ public class CreateInternshipActivity extends AppCompatActivity
                     newInternShip.setCategory(category);
                     newInternShip.setDuration(durationLength + " " + durationType);
                     newInternShip.setNumOfOpenings(Integer.parseInt(numOfOpenings));
-                    newInternShip.setProfile(currentCompany.getProfile());
+                    //newInternShip.setProfile(currentCompany.getProfile);
                     newInternShip.setLocation(location);
 
                     internshipViewModel.postInternship(newInternShip).observe(this,isSuccessful ->
@@ -80,7 +81,7 @@ public class CreateInternshipActivity extends AppCompatActivity
                         if (isSuccessful != null) if (isSuccessful)
                         {
                             Toast.makeText(this, "Upload Successful", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(this, MainActivity.class));
+                            startActivity(new Intent(this, com.werpindia.internnigeria.activities.MainActivity.class));
                             finish();
                         }
                     });
