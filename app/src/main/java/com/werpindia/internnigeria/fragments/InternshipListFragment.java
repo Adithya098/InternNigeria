@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-import com.werpindia.internnigeria.adapters.DashboardRecyclerAdapter;
+import com.werpindia.internnigeria.adapters.InternshipAdapter;
 import com.werpindia.internnigeria.databinding.FragmentInternshipListBinding;
 import com.werpindia.internnigeria.viewModels.InternshipViewModel;
 
@@ -38,7 +38,7 @@ public class InternshipListFragment extends Fragment {
             {
                 internshipListBinding.internshipRecyclerView.setHasFixedSize(true);
                 internshipListBinding.internshipRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                internshipListBinding.setAdapter(new DashboardRecyclerAdapter(internships,getContext()));
+                internshipListBinding.setAdapter(new InternshipAdapter(internships,getContext()));
             }
         });
         return internshipListBinding.getRoot();

@@ -49,7 +49,7 @@ public class CompanyRepository {
                         Objects.requireNonNull(auth.getCurrentUser()).sendEmailVerification();
                         auth.signOut();
                         result.setValue(new FirebaseResponse(
-                                "A Confirmation Message Has Been Sent To Oyur Email", null));
+                                "A Confirmation Message Has Been Sent To Your Email", null));
                     } else result.setValue(new FirebaseResponse(null, addTask.getException()));
                 });
             else result.setValue(new FirebaseResponse(null, new Exception(task.getException())));

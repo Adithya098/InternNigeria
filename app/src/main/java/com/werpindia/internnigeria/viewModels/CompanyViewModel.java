@@ -11,9 +11,6 @@ import com.werpindia.internnigeria.models.Company;
 import com.werpindia.internnigeria.models.CompanyProfile;
 import com.werpindia.internnigeria.models.FirebaseResponse;
 import com.werpindia.internnigeria.repositories.CompanyRepository;
-import com.werpindia.internnigeria.repositories.InternshipRepository;
-
-import io.reactivex.disposables.CompositeDisposable;
 
 public class CompanyViewModel extends AndroidViewModel {
     private ObservableField<String> loginEmail = new ObservableField<>();
@@ -24,15 +21,11 @@ public class CompanyViewModel extends AndroidViewModel {
     private ObservableField<String> signUpCompanyName = new ObservableField<>();
     private ObservableField<String> signUpEmail = new ObservableField<>();
 
-    private CompositeDisposable compositeDisposable = new CompositeDisposable();
-
     private CompanyRepository companyRepository;
-    private InternshipRepository internshipRepository;
 
     public CompanyViewModel(@NonNull Application application) {
         super(application);
         companyRepository = new CompanyRepository();
-        internshipRepository = new InternshipRepository();
     }
 
     public LiveData<FirebaseResponse> loginEmployer() {
@@ -49,11 +42,6 @@ public class CompanyViewModel extends AndroidViewModel {
         return companyRepository.getCompany(email);
     }
 
-    @Override
-    protected void onCleared() {
-        compositeDisposable.clear();
-        super.onCleared();
-    }
 
     public ObservableField<String> getLoginEmail() {
         return loginEmail;

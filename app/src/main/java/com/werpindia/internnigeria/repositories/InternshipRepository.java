@@ -1,97 +1,93 @@
 package com.werpindia.internnigeria.repositories;
 
-import com.google.firebase.auth.FirebaseAuth;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
 import com.google.firebase.firestore.QuerySnapshot;
+import com.werpindia.internnigeria.models.FirebaseResponse;
 import com.werpindia.internnigeria.models.Internship;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.Single;
-import io.reactivex.SingleOnSubscribe;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
+public class InternshipRepository {
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-public class InternshipRepository
-{
-    private FirebaseFirestore db;
-    private FirebaseAuth auth;
+    private static InternshipRepository instance;
 
-    private final String INTERNSHIP_COLLECTION_NAME = "Internships";
+    private final String INTERNSHIP_COLLECTION = "Internships";
+    private final String INTERNSHIP_APPLICANTS_COLLECTION = "Internships";
 
-    public InternshipRepository()
-    {
-        db = FirebaseFirestore.getInstance();
-        auth = FirebaseAuth.getInstance();
+    private InternshipRepository() {
     }
 
-    public Single<Boolean> postInternship(Internship newInternship) {
-        return Single.create((SingleOnSubscribe<Boolean>) emitter ->
-        {
-            if (!emitter.isDisposed())
-            {
-                db.collection(INTERNSHIP_COLLECTION_NAME).add(newInternship)
-                        .addOnCompleteListener(task ->
+    public static InternshipRepository getInstance() {
+        if (instance == null) instance = new InternshipRepository();
+        return instance;
+    }
+
+    public LiveData<FirebaseResponse> postInternship(Internship newInternship) {
+        MutableLiveData<FirebaseResponse> result = new MutableLiveData<>();
+        db.collection(INTERNSHIP_COLLECTION).add(newInternship)
+                .addOnCompleteListener(task ->
                 {
-                    if (task.isSuccessful()) emitter.onSuccess(true);
-                    else emitter.onError(task.getException());
+                    if (task.isSuccessful()) result.setValue(new FirebaseResponse(true, null));
+                    else result.setValue(new FirebaseResponse(null, task.getException()));
                 });
-            }
-        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+        return result;
     }
 
-    public Single<List<Internship>> getCompanyInternships(String companyEmail) {
-        return Single.create((SingleOnSubscribe<List<Internship>>) emitter ->
-        {
-            if (!emitter.isDisposed())
-            {
-                db.collection(INTERNSHIP_COLLECTION_NAME).whereEqualTo("companyEmail",companyEmail)
-                        .get().addOnCompleteListener(task -> {
-                    if (task.isSuccessful())
-                    {
-                        QuerySnapshot querySnapshot = task.getResult();
-                        if (querySnapshot != null && !querySnapshot.getDocuments().isEmpty())
-                        {
-                            List<Internship> internships = new ArrayList<>();
-                            for (DocumentSnapshot snapshot : querySnapshot)
-                                internships.add(snapshot.toObject(Internship.class));
+    public LiveData<FirebaseResponse> getCompanyInternships(String companyEmail) {
+        MutableLiveData<FirebaseResponse> result = new MutableLiveData<>();
+        db.collection(INTERNSHIP_COLLECTION).whereEqualTo("companyEmail", companyEmail)
+                .get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                QuerySnapshot querySnapshot = task.getResult();
+                if (querySnapshot != null && !querySnapshot.getDocuments().isEmpty()) {
+                    List<Internship> internships = new ArrayList<>();
+                    for (DocumentSnapshot snapshot : querySnapshot)
+                        internships.add(snapshot.toObject(Internship.class));
 
-                            emitter.onSuccess(internships);
-                        }
-                        else emitter.onSuccess(null);
-                    }
-                    else emitter.onError(task.getException());
-                });
-            }
-        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+                    result.setValue(new FirebaseResponse(internships, null));
+                } else result.setValue(new FirebaseResponse(null, null));
+            } else result.setValue(new FirebaseResponse(null, task.getException()));
+        });
+        return result;
     }
 
-    public Single<List<Internship>> getInternships()
-    {
-        return Single.create((SingleOnSubscribe<List<Internship>>) emitter ->
-        {
-            if (!emitter.isDisposed())
-            {
-                db.collection(INTERNSHIP_COLLECTION_NAME).get().addOnCompleteListener(task -> {
-                    if (task.isSuccessful())
-                    {
-                        QuerySnapshot querySnapshot = task.getResult();
-                        if (querySnapshot != null && !querySnapshot.getDocuments().isEmpty())
-                        {
-                            List<Internship> internships = new ArrayList<>();
-                            for (DocumentSnapshot snapshot : querySnapshot)
-                                internships.add(snapshot.toObject(Internship.class));
+    public LiveData<FirebaseResponse> getApplicatnts(String id) {
+        MutableLiveData<FirebaseResponse> result = new MutableLiveData<>();
+        db.collection(INTERNSHIP_COLLECTION).whereEqualTo("id", id)
+                .get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                QuerySnapshot querySnapshot = task.getResult();
+                if (querySnapshot != null && !querySnapshot.getDocuments().isEmpty()) {
+                    List<Internship> internships = new ArrayList<>();
+                    for (DocumentSnapshot snapshot : querySnapshot)
+                        internships.add(snapshot.toObject(Internship.class));
 
-                            emitter.onSuccess(internships);
-                        }
-                        else emitter.onSuccess(null);
-                    }
-                    else emitter.onError(task.getException());
-                });
-            }
-        }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
+                    result.setValue(new FirebaseResponse(internships, null));
+                } else result.setValue(new FirebaseResponse(null, null));
+            } else result.setValue(new FirebaseResponse(null, task.getException()));
+        });
+        return result;
+    }
+
+    public LiveData<FirebaseResponse> getAllInternships() {
+        MutableLiveData<FirebaseResponse> result = new MutableLiveData<>();
+        db.collection(INTERNSHIP_COLLECTION).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                QuerySnapshot querySnapshot = task.getResult();
+                if (querySnapshot != null && !querySnapshot.getDocuments().isEmpty()) {
+                    List<Internship> internships = new ArrayList<>();
+                    for (DocumentSnapshot snapshot : querySnapshot)
+                        internships.add(snapshot.toObject(Internship.class));
+                    result.setValue(new FirebaseResponse(internships, null));
+                } else result.setValue(new FirebaseResponse(null, null));
+            } else result.setValue(new FirebaseResponse(null, task.getException()));
+        });
+        return result;
     }
 }

@@ -3,6 +3,7 @@ package com.werpindia.internnigeria.models;
 public class CompanyProfile
 {
     private String companyName;
+    private String email;
     private String logo;
 
     public CompanyProfile() { }
@@ -26,5 +27,13 @@ public class CompanyProfile
 
     public void setLogo(String logo) {
         this.logo = logo;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

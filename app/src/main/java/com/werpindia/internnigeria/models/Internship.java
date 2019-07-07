@@ -2,19 +2,29 @@ package com.werpindia.internnigeria.models;
 
 import java.util.List;
 
-public class Internship
-{
+public class Internship {
+    private String id;
     private String category;
     private String location;
-    private int numOfOpenings;
+    private Integer numOfOpenings;
     private String startDate;
     private String duration;
     private List<String> internResponsibilities;
     private List<String> questions;
-    private double stipend;
+    private Double stipend;
     private CompanyProfile profile;
 
-    public Internship() {}
+    public Internship() {
+    }
+
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getCategory() {
         return category;
@@ -32,11 +42,11 @@ public class Internship
         this.location = location;
     }
 
-    public int getNumOfOpenings() {
+    public Integer getNumOfOpenings() {
         return numOfOpenings;
     }
 
-    public void setNumOfOpenings(int numOfOpenings) {
+    public void setNumOfOpenings(Integer numOfOpenings) {
         this.numOfOpenings = numOfOpenings;
     }
 
@@ -64,11 +74,11 @@ public class Internship
         this.internResponsibilities = internResponsibilities;
     }
 
-    public double getStipend() {
+    public Double getStipend() {
         return stipend;
     }
 
-    public void setStipend(double stipend) {
+    public void setStipend(Double stipend) {
         this.stipend = stipend;
     }
 
